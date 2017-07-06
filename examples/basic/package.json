@@ -4,7 +4,9 @@
     "start": "grial start"
   },
   "dependencies": {
-    "compression": "^1.6.2",
-    "morgan": "^1.8.2"
+    "@grial/cli": "^1.0.0",
+    "@grial/connector-faker": "^1.0.1",
+    "@grial/server": "^1.0.1",
+    "compression": "^1.6.2"
   }
 }
