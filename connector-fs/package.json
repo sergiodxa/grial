@@ -1,0 +1,22 @@
+{
+  "name": "@grial/connector-fs",
+  "version": "1.0.0",
+  "description": "The Grial connector to the file system",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiodxa/grial.git"
+  },
+  "keywords": [
+    "grial",
+    "grial-connector",
+    "fs",
+    "filesystem"
+  ],
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sergiodxa/grial/issues"
+  },
+  "homepage": "https://github.com/sergiodxa/grial#readme"
+}
