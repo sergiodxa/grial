@@ -1,1 +1,1 @@
-module.exports = [require('morgan')(':default'), require('compression')()];
+module.exports = [require('compression')()];

@@ -72,31 +72,6 @@ type Todo {
 type Query {
   users(page: Int): [User]!
   user(id: Int!): User!
-
-  post(id: Int!): Post!
-  posts(page: Int): [Post]!
-
-  comment(id: Int!): Comment!
-  comments(page: Int): [Comment]!
-
-  todo(id: Int!): Todo!
-  todos(page: Int): Todo!
-
-  album(id: Int!): Album!
-  albums(page: Int): [Album]!
-
-  photo(id: Int!): Photo!
-  photos(page: Int): [Photo]!
-}
-
-input PublishPostInput {
-  title: String!
-  body: String!
-  userId: Int!
-}
-
-type Mutation {
-  publishPost(input: PublishPostInput): Post
 }
 
 schema {
