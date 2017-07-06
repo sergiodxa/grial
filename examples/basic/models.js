@@ -3,7 +3,7 @@ exports.User = async function User({ faker }) {
     me() {
       return {
         id: faker.random.number(),
-        username: fake.internet.userName(),
+        username: faker.internet.userName(),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         bio: faker.name.title()
