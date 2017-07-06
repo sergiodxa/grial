@@ -1,0 +1,8 @@
+{
+  "name": "grial-example-basic",
+  "alias": "grial-example-basic.now.sh",
+  "env": {
+    "HOST": "localhost",
+    "PORT": 3000,
+  }
+}

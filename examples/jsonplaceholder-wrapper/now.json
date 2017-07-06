@@ -1,0 +1,9 @@
+{
+  "name": "grial-example-rest-wrapper",
+  "alias": "grial-example-rest-wrapper.now.sh",
+  "env": {
+    "HOST": "localhost",
+    "PORT": 3000,
+    "REST_ENDPOINT": "https://jsonplaceholder.typicode.com"
+  }
+}
