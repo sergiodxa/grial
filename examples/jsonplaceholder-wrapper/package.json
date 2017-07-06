@@ -1,0 +1,10 @@
+{
+  "name": "grial-example-jsonplaceholder-wrapper",
+  "scripts": {
+    "start": "grial start"
+  },
+  "dependencies": {
+    "compression": "^1.6.2",
+    "morgan": "^1.8.2"
+  }
+}
