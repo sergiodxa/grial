@@ -5,6 +5,6 @@ exports.user = function user(post, args, context) {
 exports.comments = function comments(post, args, context) {
   return context.connectors.rest.read({
     resource: 'comments',
-    params: { postId: post.id },
+    params: { postId: post.id }
   });
 };

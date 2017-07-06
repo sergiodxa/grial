@@ -8,7 +8,7 @@ if (pkg.peerDependencies) {
       console.warn(
         `${dependency} not found. Please install ${dependency} using 'npm i ${dependency}'`
       );
-      process.exit(0)
+      process.exit(0);
     }
   });
 }

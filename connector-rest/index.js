@@ -14,11 +14,11 @@ async function rest({ REST_ENDPOINT }) {
         method: 'POST',
         headers: Object.assign(
           {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           headers
         ),
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       });
 
       return response.json();
@@ -33,7 +33,7 @@ async function rest({ REST_ENDPOINT }) {
 
       const response = await fetch(URL, {
         method: 'GET',
-        headers: headers,
+        headers: headers
       });
 
       return response.json();
@@ -48,11 +48,11 @@ async function rest({ REST_ENDPOINT }) {
         method: 'PUT',
         headers: Object.assign(
           {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           headers
         ),
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       });
 
       return response.json();
@@ -67,11 +67,11 @@ async function rest({ REST_ENDPOINT }) {
 
       const response = await fetch(URL, {
         method: 'DELETE',
-        headers: headers,
+        headers: headers
       });
 
       return response.json();
-    },
+    }
   };
 }
 

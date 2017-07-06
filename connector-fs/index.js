@@ -24,7 +24,7 @@ async function filesystem() {
 
     async check(filePath) {
       return existFile(filePath);
-    },
+    }
   };
 }
 

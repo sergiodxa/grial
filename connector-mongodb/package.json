@@ -7,11 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/sergiodxa/grial.git"
   },
-  "keywords": [
-    "grial",
-    "grial-connector",
-    "mongodb"
-  ],
+  "keywords": ["grial", "grial-connector", "mongodb"],
   "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
   "license": "MIT",
   "bugs": {

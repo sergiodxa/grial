@@ -11,9 +11,9 @@ describe('User resolver', () => {
             expect(resource).toBe('posts');
             expect(params.userId).toBe(1);
             return posts;
-          },
-        },
-      },
+          }
+        }
+      }
     }).toBe(posts);
   });
 
@@ -27,9 +27,9 @@ describe('User resolver', () => {
             expect(resource).toBe('todos');
             expect(params.userId).toBe(1);
             return todos;
-          },
-        },
-      },
+          }
+        }
+      }
     }).toBe(todos);
   });
 
@@ -43,9 +43,9 @@ describe('User resolver', () => {
             expect(resource).toBe('albums');
             expect(params.userId).toBe(1);
             return albums;
-          },
-        },
-      },
+          }
+        }
+      }
     }).toBe(albums);
   });
 });

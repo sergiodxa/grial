@@ -7,13 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/sergiodxa/grial.git"
   },
-  "keywords": [
-    "grial",
-    "grial-connector",
-    "rest",
-    "api",
-    "restful"
-  ],
+  "keywords": ["grial", "grial-connector", "rest", "api", "restful"],
   "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
   "license": "MIT",
   "bugs": {

@@ -7,7 +7,7 @@ exports.User = async function User({ faker }) {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         bio: faker.name.title()
-      }
-    },
+      };
+    }
   };
 };

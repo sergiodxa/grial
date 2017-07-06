@@ -3,14 +3,14 @@ exports.User = async function User({ rest }) {
     all({ page = 1 }) {
       return rest.read({
         resource: 'users',
-        params: { _page: page },
+        params: { _page: page }
       });
     },
     withId({ id }) {
       return rest.read({
         resource: 'users',
-        id,
+        id
       });
-    },
+    }
   };
 };

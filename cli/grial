@@ -6,9 +6,6 @@ const pkg = require('./package.json');
 
 program.version(pkg.version);
 
-program
-  .command('start')
-  .description('run the Grial API server')
-  .action(require('./grial-start'));
+program.command('start').description('run the Grial API server').action(require('./grial-start'));
 
 program.parse(process.argv);

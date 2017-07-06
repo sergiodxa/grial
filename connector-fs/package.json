@@ -7,12 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/sergiodxa/grial.git"
   },
-  "keywords": [
-    "grial",
-    "grial-connector",
-    "fs",
-    "filesystem"
-  ],
+  "keywords": ["grial", "grial-connector", "fs", "filesystem"],
   "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
   "license": "MIT",
   "bugs": {

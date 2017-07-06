@@ -5,6 +5,6 @@ exports.user = function user(album, args, context) {
 exports.photos = function photos(album, args, context) {
   return context.connectors.rest.read({
     resource: 'photos',
-    params: { albumId: album.id },
+    params: { albumId: album.id }
   });
 };
