@@ -10,7 +10,7 @@ function formatURL(HOST, PORT) {
 module.exports = async () => {
   try {
     await runServer(process.env);
-    const { SUBSCRIPTION_PATH, HOST, PORT } = process.env;
+    const { SUBSCRIPTION_PATH = 'subscriptions', HOST = 'localhost', PORT = 3000 } = process.env;
     const URL = formatURL(HOST, PORT);
     console.log(colors.green('Grial API server running'));
     console.log(colors.green(`> GraphiQL Endpoint ${URL}/ide`));
