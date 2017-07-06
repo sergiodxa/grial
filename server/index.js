@@ -65,7 +65,6 @@ async function run(env) {
       [connectorName]: instance,
     })
   }, {})
-  console.log(instancedConnectors)
 
   // create new instances of each model
   const modelParams = Object.assign({}, env, instancedConnectors)
