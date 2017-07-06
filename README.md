@@ -1,5 +1,12 @@
 # Grial
-A Node.js framework to create GraphQL APIs
+A Node.js framework to create GraphQL APIs.
+
+## Why?
+There's a lot of boilerplate code required to code a GraphQL server with Node.js, the server code it's almost always the same, create a server, load the resolvers and the schema and set the `/graphql` endpoint.
+
+Grial allow you to only think about your business logic and API and is responsible for implementing the boilerplate code for you.
+
+Grial also give you a serie of connector in order to consume many data sources easily.
 
 ## How to use
 ### Setup
