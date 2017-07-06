@@ -1,0 +1,24 @@
+{
+  "name": "@grial/connector-faker",
+  "version": "1.0.0",
+  "description": "The Grial connector for faker",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiodxa/grial.git"
+  },
+  "keywords": [
+    "grial",
+    "grial-connector",
+    "faker"
+  ],
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sergiodxa/grial/issues"
+  },
+  "homepage": "https://github.com/sergiodxa/grial#readme",
+  "dependencies": {
+    "faker": "^4.1.0"
+  }
+}
