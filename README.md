@@ -26,6 +26,18 @@ Add the following script to your `package.json`
 }
 ```
 
+When you run `npm start` and without creating environment variables you will see something like this.
+
+```bash
+$ grial start
+Grial API server running
+> GraphiQL Endpoint http://localhost:3000/ide
+> API Endpoint http://localhost:3000/graphql
+> Subscriptions Endpoint http://localhost:3000/subscriptions
+```
+
+You can then access to `http://localhost:3000/ide` and try your GraphQL server from the GraphiQL in-browser IDE.
+
 ### File structure
 #### `connectors.js`
 Data source connectors, they can be your own custom connectors or you can just re-export the Grial connectors you downloaded from internet.
