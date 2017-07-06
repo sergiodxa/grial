@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@grial/cli@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@grial/cli/-/cli-1.0.0.tgz#d7b665a4d53a3df6b708efaad4cd4e689029ff41"
+"@grial/cli@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@grial/cli/-/cli-1.0.1.tgz#6efc4cf2922936f48aae3c22db7bf92723afdab6"
   dependencies:
     colors "^1.1.2"
     commander "^2.11.0"
@@ -16,7 +16,7 @@
   dependencies:
     faker "^4.1.0"
 
-"@grial/server@^1.0.1":
+"@grial/server@latest":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@grial/server/-/server-1.0.1.tgz#640779ee2a840ccf45e02b0f1f9a64b17a488da4"
   dependencies:
