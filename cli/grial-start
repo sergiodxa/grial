@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+require('dotenv').config();
+const colors = require('colors');
+const runServer = require('@grial/server');
+
+function formatURL(HOST, PORT) {
+  return `http://${HOST}:${PORT}`;
+}
+
+module.exports = async () => {
+  try {
+    await runServer(process.env);
+    const { SUBSCRIPTION_PATH, HOST, PORT } = process.env;
+    const URL = formatURL(HOST, PORT);
+    console.log(colors.green('Grial API server running'));
+    console.log(colors.green(`> GraphiQL Endpoint ${URL}/ide`));
+    console.log(colors.green(`> API Endpoint ${URL}/graphql`));
+    console.log(colors.green(`> Subscriptions Endpoint ${URL}/${SUBSCRIPTION_PATH}`));
+  } catch (error) {
+    console.error(error);
+    process.exit(error);
+  }
+};

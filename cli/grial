@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+const program = require('commander');
+const pkg = require('./package.json');
+
+// require('./utils/check-peer-deps.js');
+
+program.version(pkg.version);
+
+program
+  .command('start')
+  .description('run the Grial API server')
+  .action(require('./grial-start'));
+
+program.parse(process.argv);

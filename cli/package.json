@@ -1,0 +1,33 @@
+{
+  "name": "@grial/cli",
+  "version": "1.0.0",
+  "description": "The Grial CLI used to start the API",
+  "main": "grial",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiodxa/grial.git"
+  },
+  "keywords": [
+    "grial",
+    "connector",
+    "fs",
+    "filesystem"
+  ],
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sergiodxa/grial/issues"
+  },
+  "homepage": "https://github.com/sergiodxa/grial#readme",
+  "bin": {
+    "grial": "./grial"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.11.0",
+    "dotenv": "^4.0.0"
+  },
+  "peerDependencies": {
+    "@grial/server": "latest"
+  }
+}
