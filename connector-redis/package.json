@@ -1,0 +1,24 @@
+{
+  "name": "@grial/connector-redis",
+  "version": "1.0.0",
+  "description": "The Grial connector for Redis databases",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiodxa/grial.git"
+  },
+  "keywords": [
+    "grial",
+    "grial-connector",
+    "redis"
+  ],
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sergiodxa/grial/issues"
+  },
+  "homepage": "https://github.com/sergiodxa/grial#readme",
+  "dependencies": {
+    "redis": "^2.7.1"
+  }
+}
