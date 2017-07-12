@@ -7,6 +7,6 @@
     "@grial/cli": "^1.0.1",
     "@grial/connector-rest": "^1.0.0",
     "@grial/server": "^1.0.1",
-    "compression": "^1.6.2"
+    "dataloader": "^1.3.0"
   }
 }
