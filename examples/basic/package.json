@@ -4,9 +4,9 @@
     "start": "grial start"
   },
   "dependencies": {
-    "@grial/cli": "^1.0.1",
-    "@grial/connector-faker": "^1.0.1",
+    "@grial/cli": "ltest",
+    "@grial/connector-faker": "ltest",
     "@grial/server": "latest",
-    "compression": "^1.6.2"
+    "compression": "latest"
   }
 }
