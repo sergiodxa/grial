@@ -15,6 +15,7 @@ const getSchemas = require('./api/schema.js');
 
 // Business logic layer
 const getConnectors = require('./app/connectors.js');
+const getLoaders = require('./app/loaders.js');
 const getMiddlewares = require('./app/middlewares.js');
 const getModels = require('./app/models.js');
 
@@ -43,6 +44,7 @@ async function run(env) {
 
   // Business logic layer
   const connectors = await getConnectors(BASE_PATH);
+  const loaders = await getLoaders(BASE_PATH);
   const middlewares = await getMiddlewares(BASE_PATH);
   const models = await getModels(BASE_PATH);
 
@@ -84,13 +86,27 @@ async function run(env) {
   app.use(
     '/graphql',
     graphqlExpress(request => {
+      const loaderParams = Object.assign({}, modelParams, instancedModels, request);
+
+      const instancedLoaders = Object.keys(loaders)
+        .map(loaderName => {
+          const instance = loaders[loaderName](loaderParams);
+          return [instance, loaderName];
+        })
+        .reduce((instances, [instance, loaderName]) => {
+          return Object.assign(instances, {
+            [loaderName]: instance
+          });
+        }, {});
+
       return {
         schema,
         debug: NODE_ENV !== 'production',
         context: {
           request,
           connectors: instancedConnectors,
-          models: instancedModels
+          models: instancedModels,
+          loaders: instancedLoaders
         }
       };
     })
