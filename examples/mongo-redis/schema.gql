@@ -1,0 +1,38 @@
+type User {
+  id: Int!
+  username: String!
+  todos: [Todo]!
+}
+
+type Todo {
+  id: Int!
+  content: String!
+  author: User!
+}
+
+type Query {
+  me: User!
+  user(id: Int!): User
+  todo(id: Int!): Todo
+}
+
+input WriteUserInput {
+  id: Int
+  username: String!
+}
+
+input CreateTodoInput {
+  id: Int!
+  content: String!
+  userId: Int!
+}
+
+type Mutation {
+  writeUser(input: WriteUserInput): User
+  createTodo(input: CreateTodoInput): Todo
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

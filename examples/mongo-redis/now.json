@@ -1,0 +1,11 @@
+{
+  "name": "grial-example-mongo-redis",
+  "alias": "grial-example-mongo-redis.now.sh",
+  "env": {
+    "HOST": "localhost",
+    "PORT": 3000,
+    "REDIS_HOST": "@grial_example_redis_host",
+    "REDIS_PORT": "@grial_example_redis_port",
+    "MONGO_URL": "@grial_example_mongo_url"
+  }
+}
