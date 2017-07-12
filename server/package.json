@@ -1,13 +1,16 @@
 {
   "name": "@grial/server",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "The Grial server",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sergiodxa/grial.git"
   },
-  "keywords": ["grial", "grial-server"],
+  "keywords": [
+    "grial",
+    "grial-server"
+  ],
   "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
   "license": "MIT",
   "bugs": {
