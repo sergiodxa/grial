@@ -1,5 +1,5 @@
 exports.user = function user(album, args, context) {
-  return context.models.User.withId({ id: album.userId });
+  return context.loaders.userLoader.load(album.userId);
 };
 
 exports.photos = function photos(album, args, context) {

@@ -1,5 +1,5 @@
 exports.user = function user(post, args, context) {
-  return context.models.User.withId({ id: post.userId });
+  return context.loaders.userLoader.load(post.userId);
 };
 
 exports.comments = function comments(post, args, context) {
