@@ -2,7 +2,7 @@
 const program = require('commander');
 const pkg = require('./package.json');
 
-// require('./utils/check-peer-deps.js');
+require('./utils/check-peer-deps.js');
 
 program.version(pkg.version);
 
