@@ -4,11 +4,11 @@ A Node.js framework to create GraphQL APIs.
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 ## Why?
-There's a lot of boilerplate code required to code a GraphQL server with Node.js, the server code it's almost always the same, create a server, load the resolvers and the schema and set the `/graphql` endpoint.
+There's a lot of boilerplate code required to run a GraphQL API with Node.js, the server code it's almost always the same, create a server, load the resolvers and the schema and set the `/graphql` endpoint along with GraphiQL.
 
 Grial allow you to only think about your business logic and API and is responsible for implementing the boilerplate code for you.
 
-Grial also give you a serie of connector in order to consume many data sources easily.
+Grial also provide you with connectors you can use to consume many data sources easily.
 
 ## How to use
 ### Setup
@@ -32,28 +32,26 @@ When you run `npm start` and without creating environment variables you will see
 
 ```bash
 $ grial start
-Grial API server running
-> GraphiQL Endpoint http://localhost:3000/ide
-> API Endpoint http://localhost:3000/graphql
-> Subscriptions Endpoint http://localhost:3000/subscriptions
+Grial server running
+> GraphiQL Endpoint      = http://localhost:3000/ide
+> API Endpoint           = http://localhost:3000/graphql
+> Subscriptions Endpoint = http://localhost:3000/subscriptions
 ```
 
 You can then access to `http://localhost:3000/ide` and try your GraphQL server from the GraphiQL in-browser IDE.
 
 ### File structure
-#### `connectors.js`
-Data source connectors, they can be your own custom connectors or you can just re-export the Grial connectors you downloaded from internet.
+#### `connectors.js` (optional)
+Data source connectors, they can be your own custom connectors or you can just re-export the Grial connectors you download from npm.
 
-#### `middlewares.js`
-The HTTP server middleware you want to apply, it's an array of your middlewares.
+#### `loaders.js` (optional)
+Data loaders you can use to batch requests or queries. They are recreated per request and because of that have a single request cache. Receive the models and connectors and can use them internally to fetch data.
 
-> Connect/Express compatible middlewares
-
-#### `models.js`
+#### `models.js` (optional)
 Your application models, they can use a single connector or even use multiple ones. Here's where your application business logic must reside.
 
 #### `resolvers.js`
-Your API schema resolvers. The resolvers receive the connectors and models from context and allow you to use them as you want. They are intented to be as dummy as possible and you must keep your logic inside your models.
+Your API schema resolvers. The resolvers receive the connectors, loaders and models from context and allow you to use them as you want. They are intented to be as dummy as possible and you must keep your logic inside your models.
 
 #### `schema.gql`
 Your API schema definition. It's just a `.gql` file with all your API schema.
@@ -73,12 +71,12 @@ async function connector(env) {
 module.exports = connector;
 ```
 
-That's a really simple connecto, as you can see it receive the environment variables as an argument and it return a object. You can then use that object inside your models to get that.
+That's a really simple connector, as you can see it receive the environment variables as an argument and it return a object. Then you can use that object inside your models to get that piece of data.
 
 Your connectors can be generic or specific to some server. Eg. you can have a Sequelize connector for any kind of relational database or your can have a PostgreSQL specific connector.
 
 ### Using multi-instances of a single connector
-You may want to use the same connector with multiple times, maybe you have 2 MongoDB databases or you want to fetch data from many REST APIs. If that's your case you can create a custom connector who work as a proxy for the Grial connectors.
+You may want to use the same connector multiple times, maybe you have 2 MongoDB databases or you want to fetch data from many REST APIs. If that's your case you can create a custom connector who work as a proxy for the Grial provided connectors.
 
 This proxy connector receive your own custom environment variables and pass them as the required to the real connector.
 
@@ -91,6 +89,8 @@ exports.swapi = function({ SWAPI_ENDPOINT }) {
   return require('@grial/connector-rest')({ REST_ENDPOINT: SWAPI_ENDPOINT })
 }
 ```
+
+That way the real connector receive the required variable but you can use a custom one with a any name.
 
 ## Create a `model`
 A model it's an async function who receive the connectors and environment variables and return a new object, your real model. That object it's intended to receive the arguments and HTTP request object from your resolvers and have your business logic.
@@ -171,7 +171,7 @@ exports.User = require('./resolvers/User.js')
 That way your `./resolvers/User.js` file can have the methods required to resolver the full User type.
 
 ### Testing
-Because the resolvers receive the models and conenctors from the context object you can easily test it, if you have a resolver like this:
+Because the resolvers receive the models and connectors from the context object you can easily test it, if you have a resolver like this:
 
 ```js
 exports.posts = function posts(user, args, context) {
