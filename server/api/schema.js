@@ -8,6 +8,9 @@ module.exports = async function getSchema(BASE_PATH) {
   try {
     return readFile(resolve(`${BASE_PATH}/schema.gql`), 'utf8');
   } catch (error) {
-    throw new ReferenceError('The file `./schema.gql` is required.');
+    if (error.code === 'MODULE_NOT_FOUND') {
+      throw new ReferenceError('The file `./schema.gql` is required.');
+    }
+    throw error;
   }
 };

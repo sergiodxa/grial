@@ -4,6 +4,9 @@ module.exports = async function getResolvers(BASE_PATH) {
   try {
     return require(resolve(`${BASE_PATH}/resolvers.js`));
   } catch (error) {
-    throw new ReferenceError('The file `./resolvers.js` is required.');
+    if (error.code === 'MODULE_NOT_FOUND') {
+      throw new ReferenceError('The file `./resolvers.js` is required.');
+    }
+    throw error;
   }
 };
