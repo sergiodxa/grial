@@ -26,21 +26,26 @@ grial start
 It will load it and use it to start your API server.
 
 ## Custom usage
-You can avoid `@grial/cli` and just create a `index.js` file with this code.
+You can avoid `@grial/cli` and just create a `server.js` file with a code similar to this.
 
 ```js
-const runServer = require('@grial/server')
+const Grial = require('@grial/server');
+const { createServer } = require('http');
 
-runServer(process.env)
-  .then(({ server, subscription }) => {
-    // server => your HTTP server
-    // subscription => your WS server
-    console.log('server running')
+const api = new Grial(process.env);
+const handle = api.getRequestHandler();
+
+api.prepare()
+  .then(() => {
+    const server = createServer(handle);
+    server.listen(3000);
   })
   .catch(error => {
-    console.error(error)
-    process.exit(0)
+    console.error(error);
+    process.exit(0);
   })
 ```
 
-That way you can start the server and run any code you want before or after the server it's running. It also allow you use use something like `nodemon` to watch file changes.
+That way you can run a Express application and use the Grial request handler for your API, it will handle the /graphql and /ide urls and call the next middleware if the URL doesn't match.
+
+It also allow you use use something like `nodemon` to watch file changes in your API.
