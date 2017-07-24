@@ -1,13 +1,13 @@
 // native
 const { createServer } = require('http');
+const { parse } = require('url');
 
 // packages
-const express = require('express');
-const bodyParser = require('body-parser');
-const { execute, subscribe } = require('graphql');
-const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
+const { runHttpQuery } = require('graphql-server-core');
+const GraphiQL = require('graphql-server-module-graphiql');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
+const { execute, subscribe } = require('graphql');
 
 // API layer
 const getResolvers = require('./api/resolvers.js');
@@ -16,125 +16,244 @@ const getSchemas = require('./api/schema.js');
 // Business logic layer
 const getConnectors = require('./app/connectors.js');
 const getLoaders = require('./app/loaders.js');
-const getMiddlewares = require('./app/middlewares.js');
 const getModels = require('./app/models.js');
 
+// HTTP Server layer
+const getConfig = require('./server/config.js');
+
+// Utils
+const instantiate = require('./utils/instantiate.js');
+const mergeInstances = require('./utils/merge-instances.js');
+const { json } = require('./utils/body-parser.js');
+
 /**
- * Run the server
- * @param {Object} env The app environment variables
+ * Grial server
+ * @type {Class}
  */
-async function run(env) {
-  const {
-    NODE_ENV = 'development',
-    BASE_PATH = '.',
-    HOST,
-    PORT,
-    PUBLIC_HOST = env.HOST,
-    PUBLIC_PORT = env.PORT,
-    SUBSCRIPTION_PATH = 'subscriptions'
-  } = env;
-
-  // create express app and http server
-  const app = express();
-  const server = createServer(app);
-
-  // API layer
-  const resolvers = await getResolvers(BASE_PATH);
-  const typeDefs = await getSchemas(BASE_PATH);
-
-  // Business logic layer
-  const connectors = await getConnectors(BASE_PATH);
-  const loaders = await getLoaders(BASE_PATH);
-  const middlewares = await getMiddlewares(BASE_PATH);
-  const models = await getModels(BASE_PATH);
-
-  // set middlewares
-  app.use(bodyParser.json()); // parse POST requests body
-  // set custom middlewares
-  middlewares.forEach(middleware => app.use(middleware));
-
-  // create GraphQL schema and subscription manager
-  const schema = makeExecutableSchema({ typeDefs, resolvers });
-
-  // create new instances of each connector
-  const instancedConnectors = (await Promise.all(
-    Object.keys(connectors).map(async connectorName => {
-      const instance = await connectors[connectorName](env);
-      return [instance, connectorName];
-    })
-  )).reduce((instances, [instance, connectorName]) => {
-    return Object.assign(instances, {
-      [connectorName]: instance
-    });
-  }, {});
-
-  // create new instances of each model
-  const modelParams = Object.assign({}, env, instancedConnectors);
-
-  const instancedModels = (await Promise.all(
-    Object.keys(models).map(async modelName => {
-      const instance = await models[modelName](modelParams);
-      return [instance, modelName];
-    })
-  )).reduce((instances, [instance, modelName]) => {
-    return Object.assign(instances, {
-      [modelName]: instance
-    });
-  }, {});
-
-  // set /graphql endpoint
-  app.use(
-    '/graphql',
-    graphqlExpress(request => {
-      const loaderParams = Object.assign({}, modelParams, instancedModels, request);
-
-      const instancedLoaders = Object.keys(loaders)
-        .map(loaderName => {
-          const instance = loaders[loaderName](loaderParams);
-          return [instance, loaderName];
-        })
-        .reduce((instances, [instance, loaderName]) => {
-          return Object.assign(instances, {
-            [loaderName]: instance
-          });
-        }, {});
-
-      return {
-        schema,
-        debug: NODE_ENV !== 'production',
-        context: {
-          request,
-          connectors: instancedConnectors,
-          models: instancedModels,
-          loaders: instancedLoaders
-        }
-      };
-    })
-  );
-
-  // set GraphiQL IDE in development
-  if (NODE_ENV !== 'production') {
-    app.use(
-      '/ide',
-      graphiqlExpress({
-        endpointURL: '/graphql',
-        subscriptionsEndpoint: `ws://${PUBLIC_HOST}:${PUBLIC_PORT}/${SUBSCRIPTION_PATH}`
-      })
-    );
+class Grial {
+  constructor(env) {
+    this.env = env;
   }
 
-  return new Promise((resolve, reject) => {
-    server.listen(PORT, HOST, error => {
-      if (error) return reject(error);
-      resolve({
-        server,
-        subscription: new SubscriptionServer(
-          { execute, subscribe, schema },
-          { server, path: `/${SUBSCRIPTION_PATH}` }
-        )
+  /**
+   * Prepare the API schema and the app models and connectors
+   * @param  {Object} env The app environment variables
+   * @return {Object}     The schema, connectors and models
+   */
+  async prepare() {
+    const { BASE_PATH = '.' } = this.env;
+
+    // Grial config
+    this.config = await getConfig(BASE_PATH);
+    if ('graphqlConfig' in this.config)
+      console.log('Custom `graphqlConfig` found in grial.config.js.');
+    if ('graphiqlConfig' in this.config)
+      console.log('Custom `graphiqlConfig` found in grial.config.js.');
+    if ('subscriptionConfig' in this.config)
+      console.log('Custom `subscriptionConfig` found in grial.config.js.');
+
+    // create schema
+    const resolvers = await getResolvers(BASE_PATH);
+    const typeDefs = await getSchemas(BASE_PATH);
+    const schema = makeExecutableSchema({ typeDefs, resolvers });
+    this.schema = schema;
+
+    // create connectors
+    const connectors = await getConnectors(BASE_PATH);
+    const instancedConnectors = (await Promise.all(
+      Object.entries(connectors).map(instantiate(this.env))
+    )).reduce(mergeInstances, {});
+    this.connectors = instancedConnectors;
+
+    // create models
+    const models = await getModels(BASE_PATH);
+    const modelParams = Object.assign({}, this.env, instancedConnectors);
+    const instancedModels = (await Promise.all(
+      Object.entries(models).map(instantiate(modelParams))
+    )).reduce(mergeInstances, {});
+    this.models = instancedModels;
+
+    // get loaders
+    this.loaders = await getLoaders(BASE_PATH);
+  }
+
+  /**
+   * Get application loaders instances
+   * @param  {Object} request HTTP request
+   * @return {Object}         Loaders instances
+   */
+  getLoaders(request) {
+    const { models, connectors, env, loaders } = this;
+    const loaderParams = Object.assign({}, request, env, connectors, models);
+    return Object.entries(loaders).map(instantiate(loaderParams)).reduce(mergeInstances, {});
+  }
+
+  /**
+   * Get GraphQL request options
+   * @return {Object} The GraphQL options
+   */
+  getGraphQLOptions(request) {
+    const { schema, models, connectors, config, env } = this;
+
+    const loaders = this.getLoaders(request);
+
+    const baseOptions = {
+      schema,
+      context: { request, connectors, models, loaders },
+      debug: env.NODE_ENV !== 'production'
+    };
+
+    if ('graphqlConfig' in config) {
+      return Object.assign(
+        {},
+        baseOptions,
+        config.graphqlConfig({ schema, request, connectors, models, loaders, env })
+      );
+    }
+
+    return baseOptions;
+  }
+
+  /**
+   * Get GraphiQL configuration options
+   * @return {Object} GraphiQL options
+   */
+  getGraphiQLOptions({ request, query }) {
+    const { env, config } = this;
+
+    const {
+      PUBLIC_HOST = env.HOST || 'localhost',
+      PUBLIC_PORT = env.PORT || 3000,
+      SUBSCRIPTION_PATH = 'subscriptions'
+    } = env;
+
+    const baseOptions = {
+      endpointURL: '/graphql',
+      subscriptionsEndpoint: `ws://${PUBLIC_HOST}:${PUBLIC_PORT}/${SUBSCRIPTION_PATH}`
+    };
+
+    if ('graphiqlConfig' in config) {
+      return Object.assign({}, baseOptions, config.graphiqlConfig({ query, request, env }));
+    }
+    return baseOptions;
+  }
+
+  /**
+   * Get WS Subscription server options
+   * @return {Object} Options
+   */
+  getSubscriptionOptions() {
+    const { env, config, schema } = this;
+
+    if ('subscriptionConfig' in config) {
+      return Object.assign({}, { schema }, config.subscriptionConfig({ env, schema }), {
+        execute,
+        subscribe
+      });
+    }
+
+    return { schema, execute, subscribe };
+  }
+
+  /**
+   * Create the HTTP request handler
+   * @return {Function} The HTTP request handler
+   */
+  getRequestHandler({ graphql = 'POST /graphql', graphiql = 'GET /ide' } = {}) {
+    /**
+     * Grail HTTP request handler
+     * @param  {Object}   request  The HTTP request
+     * @param  {Object}   response The HTTP response
+     * @param  {Function} next     Call the next middleware
+     * @return {Function}          Request handler
+     */
+    return async (request, response, next = null) => {
+      const { schema, models, connectors, env, config } = this;
+      const { NODE_ENV } = env;
+
+      const url = parse(request.url, true);
+
+      const formatedURL = `${request.method.toUpperCase()} ${url.pathname}`;
+
+      // handle GraphQL queries
+      if (formatedURL === graphql) {
+        const loaders = this.getLoaders(request);
+
+        try {
+          const data = await runHttpQuery([request, response], {
+            method: request.method,
+            options: this.getGraphQLOptions(request),
+            query: request.method === 'POST' ? request.body || (await json(request)) : url.query
+          });
+          response.setHeader('Content-Type', 'application/json');
+          response.write(data);
+        } catch (error) {
+          if (error.headers) {
+            Object.entries(error.headers).forEach(([name, value]) => {
+              response.setHeader(name, value);
+            });
+          }
+          response.statusCode = error.statusCode || 500;
+          response.write(error.message);
+        } finally {
+          return response.end();
+        }
+      }
+
+      // render GraphiQL IDE
+      if (formatedURL === graphiql) {
+        const { query } = url;
+        try {
+          const graphiqlString = await GraphiQL.resolveGraphiQLString(
+            query,
+            this.getGraphiQLOptions({ query, request, env }),
+            request
+          );
+          response.setHeader('Content-Type', 'text/html');
+          response.write(graphiqlString);
+        } catch (error) {
+          response.statusCode = error.statusCode || 500;
+          response.write(error.message);
+        } finally {
+          return response.end();
+        }
+      }
+
+      // if it's running inside Express/Connect try to call the next middleware
+      if (next) return next();
+
+      response.statusCode = 404;
+      response.statusMessage = 'Not Found';
+      return response.end();
+    };
+  }
+
+  /**
+   * Run a simple HTTP and WS (subscriptions) server
+   * @return {[type]} [description]
+   */
+  run() {
+    const {
+      PORT = 3000,
+      HOST = 'localhost',
+      SUBSCRIPTION_PATH = 'subscriptions'
+    } = this.env;
+
+    const server = createServer(this.getRequestHandler());
+
+    return new Promise((resolve, reject) => {
+      server.listen(PORT, HOST, error => {
+        if (error) return reject(error);
+        resolve({
+          http: server,
+          ws: new SubscriptionServer(this.getSubscriptionOptions(), {
+            server,
+            path: `/${SUBSCRIPTION_PATH}`
+          })
+        });
       });
     });
-  });
+  }
 }
 
-module.exports = run;
+module.exports = Grial;
