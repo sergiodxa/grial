@@ -9,8 +9,8 @@
   "scripts": {
     "precommit": "lint-staged",
     "prettify": "prettier --no-semi --single-quote --trailing-comma none --print-width 100 --write **/*.js **/*.json",
-    "lint": "eslint **/**/*.js --quiet --color --cache",
-    "lint:fix": "eslint **/**/*.js --quiet --cache --fix"
+    "lint": "eslint **/*.js **/**/*.js --quiet --color --cache",
+    "lint:fix": "eslint **/*.js **/**/*.js --quiet --cache --fix"
   },
   "lint-staged": {
     "*.json": [
