@@ -6,7 +6,6 @@
   "dependencies": {
     "@grial/cli": "latest",
     "@grial/connector-faker": "latest",
-    "@grial/server": "latest",
-    "compression": "latest"
+    "@grial/server": "latest"
   }
 }

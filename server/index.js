@@ -177,7 +177,7 @@ class Grial {
      * @param  {Function} next     Call the next middleware
      * @return {Function}          Request handler
      */
-    return async function handler(request, response, next = null) {
+    return async(request, response, next = null) => {
       const { env } = this
 
       const url = parse(request.url, true)
