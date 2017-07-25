@@ -1,7 +1,7 @@
 # Grial
 A Node.js framework to create GraphQL APIs.
 
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg) ![standard](https://img.shields.io/badge/code_style-standard-brightgreen.svg) ![license](https://img.shields.io/npm/l/@grial/server.svg)
 
 ## Why?
 There's a lot of boilerplate code required to run a GraphQL API with Node.js, the server code it's almost always the same, create a server, load the resolvers and the schema and set the `/graphql` endpoint along with GraphiQL.
