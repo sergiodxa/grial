@@ -5,9 +5,13 @@
   env:
     node: true
     browser: false
+    jest: true
   extends:
     - prettier
     - standard
+    - plugin:jest/recommended
+  plugins:
+    - jest
   rules:
     space-before-function-paren:
       - error
