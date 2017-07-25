@@ -1,6 +1,6 @@
 {
   "name": "@grial/cli",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "The Grial CLI used to start the API",
   "main": "grial",
   "repository": {
@@ -23,7 +23,6 @@
     "grial": "./grial"
   },
   "dependencies": {
-    "clipboardy": "^1.1.4",
     "colors": "^1.1.2",
     "commander": "^2.11.0",
     "dotenv": "^4.0.0"

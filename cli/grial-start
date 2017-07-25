@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 require('dotenv').config()
 const colors = require('colors')
-const clipboardy = require('clipboardy')
 const Grial = require('@grial/server')
 
 module.exports = async() => {
@@ -12,27 +11,12 @@ module.exports = async() => {
     await grial.run()
 
     // get enviroment variables and format the url
-    const {
-      SUBSCRIPTION_PATH = 'subscriptions',
-      HOST = 'localhost',
-      PORT = 3000,
-      NODE_ENV
-    } = process.env
+    const { SUBSCRIPTION_PATH = 'subscriptions', HOST = 'localhost', PORT = 3000 } = process.env
     const URL = `http://${HOST}:${PORT}`
-    const isDev = NODE_ENV === 'production'
-
-    // copy the IDE url to the clipboard
-    if (isDev) await clipboardy.write(`${URL}/ide`)
 
     // show log in the console
     console.log(colors.green('Grial server running'))
-
-    if (isDev) {
-      console.log(colors.green(`> GraphiQL Endpoint      = ${URL}/ide (copied to clipboard)`))
-    } else {
-      console.log(colors.green(`> GraphiQL Endpoint      = ${URL}/ide`))
-    }
-
+    console.log(colors.green(`> GraphiQL Endpoint      = ${URL}/ide`))
     console.log(colors.green(`> API Endpoint           = ${URL}/graphql`))
     console.log(colors.green(`> Subscriptions Endpoint = ${URL}/${SUBSCRIPTION_PATH}`))
   } catch (error) {
