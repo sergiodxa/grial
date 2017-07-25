@@ -12,13 +12,3 @@ Grial also provide you with connectors you can use to consume many data sources 
 
 ## Documentation
 You can check the Grial docs in the [repository wiki](https://github.com/sergiodxa/grial/wiki)
-
-### Table of content
-- [Setup](https://github.com/sergiodxa/grial/wiki/Setup)
-- [File structure](https://github.com/sergiodxa/grial/wiki/File-structure)
-- [Creating a connector](https://github.com/sergiodxa/grial/wiki/Creating-a-connector)
-  - [Using multi instances of a single connector](https://github.com/sergiodxa/grial/wiki/Using-multi-instances-of-a-single-connector)
-- [Creating a model](https://github.com/sergiodxa/grial/wiki/Creating-a-model)
-  - [Testing](https://github.com/sergiodxa/grial/wiki/Creating-a-model#testing)
-- [Creating a resolver](https://github.com/sergiodxa/grial/wiki/Creating-a-resolvers)
-  - [Testing](https://github.com/sergiodxa/grial/wiki/Creating-a-resolvers#testing)
