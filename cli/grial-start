@@ -22,7 +22,7 @@ module.exports = async() => {
     console.log(colors.green(`> Subscriptions Endpoint = ${URL}/${SUBSCRIPTION_PATH}`))
 
     // copy the IDE url to the clipboard
-    await clipboardy(`${URL}/ide`)
+    await clipboardy.write(`${URL}/ide`)
     console.log(colors.green('GraphiQL endpoint copied to clipboard'))
   } catch (error) {
     console.error(error)
