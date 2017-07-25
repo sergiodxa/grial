@@ -1,6 +1,7 @@
 {
   "name": "grial-example-rest-wrapper",
   "alias": "grial-example-rest-wrapper.now.sh",
+  "public": true,
   "env": {
     "HOST": "localhost",
     "PORT": 3000,
