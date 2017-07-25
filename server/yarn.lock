@@ -46,6 +46,10 @@ eventemitter3@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
 
+file-exists@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/file-exists/-/file-exists-4.0.0.tgz#104eacf25d3fd6b3e462951ae923533195ffb52b"
+
 graphql-server-core@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/graphql-server-core/-/graphql-server-core-1.0.2.tgz#d7d35ff410aefd78bf45c89ed109463870d88b0c"
