@@ -1,0 +1,11 @@
+{
+  "name": "grial-with-custom-config",
+  "scripts": {
+    "start": "grial start"
+  },
+  "dependencies": {
+    "@grial/cli": "latest",
+    "@grial/connector-faker": "latest",
+    "@grial/server": "latest"
+  }
+}
