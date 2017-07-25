@@ -7,7 +7,7 @@
     "start": "grial start",
     "alias": "now alias",
     "predeploy": "npm test",
-    "deploy": "now && now alias",
+    "deploy": "now",
     "postdeploy": "npm run alias"
   },
   "dependencies": {
