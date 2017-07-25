@@ -85,20 +85,23 @@ class Grial {
    * @param  {Object} request HTTP request
    * @return {Object}         Loaders instances
    */
-  getLoaders(request) {
+  async getLoaders(request) {
     const { models, connectors, env, loaders } = this
     const loaderParams = Object.assign({}, request, env, connectors, models)
-    return Object.entries(loaders).map(instantiate(loaderParams)).reduce(mergeInstances, {})
+    return (await Promise.all(Object.entries(loaders).map(instantiate(loaderParams)))).reduce(
+      mergeInstances,
+      {}
+    )
   }
 
   /**
    * Get GraphQL request options
    * @return {Object} The GraphQL options
    */
-  getGraphQLOptions(request) {
+  async getGraphQLOptions(request) {
     const { schema, models, connectors, config, env } = this
 
-    const loaders = this.getLoaders(request)
+    const loaders = await this.getLoaders(request)
 
     const baseOptions = {
       schema,
@@ -189,7 +192,7 @@ class Grial {
         try {
           const data = await runHttpQuery([request, response], {
             method: request.method,
-            options: this.getGraphQLOptions(request),
+            options: await this.getGraphQLOptions(request),
             query: request.method === 'POST' ? request.body || (await json(request)) : url.query
           })
           response.setHeader('Content-Type', 'application/json')
