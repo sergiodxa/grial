@@ -1,7 +1,7 @@
 const { user } = require('./Todo.js')
 
 describe('Todo resolver', () => {
-  it('should fetch a the todo author', () => {
+  it('should fetch the todo author', () => {
     const userData = {
       id: 1,
       name: 'John Doe'

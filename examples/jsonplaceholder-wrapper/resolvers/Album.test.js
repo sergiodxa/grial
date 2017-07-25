@@ -1,7 +1,7 @@
 const { user, photos } = require('./Album.js')
 
 describe('Album resolver', () => {
-  it('should fetch a the todo author', () => {
+  it('should fetch the album author', () => {
     const userData = {
       id: 1,
       name: 'John Doe'

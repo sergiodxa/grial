@@ -1,7 +1,7 @@
 const { user, comments } = require('./Post.js')
 
 describe('Post resolver', () => {
-  it('should fetch a the post author', () => {
+  it('should fetch the post author', () => {
     const userData = {
       id: 1,
       name: 'John Doe'
