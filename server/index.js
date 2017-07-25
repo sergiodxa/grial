@@ -1,30 +1,30 @@
 // native
-const { createServer } = require('http');
-const { parse } = require('url');
+const { createServer } = require('http')
+const { parse } = require('url')
 
 // packages
-const { makeExecutableSchema } = require('graphql-tools');
-const { runHttpQuery } = require('graphql-server-core');
-const GraphiQL = require('graphql-server-module-graphiql');
-const { SubscriptionServer } = require('subscriptions-transport-ws');
-const { execute, subscribe } = require('graphql');
+const { makeExecutableSchema } = require('graphql-tools')
+const { runHttpQuery } = require('graphql-server-core')
+const GraphiQL = require('graphql-server-module-graphiql')
+const { SubscriptionServer } = require('subscriptions-transport-ws')
+const { execute, subscribe } = require('graphql')
 
 // API layer
-const getResolvers = require('./api/resolvers.js');
-const getSchemas = require('./api/schema.js');
+const getResolvers = require('./api/resolvers.js')
+const getSchemas = require('./api/schema.js')
 
 // Business logic layer
-const getConnectors = require('./app/connectors.js');
-const getLoaders = require('./app/loaders.js');
-const getModels = require('./app/models.js');
+const getConnectors = require('./app/connectors.js')
+const getLoaders = require('./app/loaders.js')
+const getModels = require('./app/models.js')
 
 // HTTP Server layer
-const getConfig = require('./server/config.js');
+const getConfig = require('./server/config.js')
 
 // Utils
-const instantiate = require('./utils/instantiate.js');
-const mergeInstances = require('./utils/merge-instances.js');
-const { json } = require('./utils/body-parser.js');
+const instantiate = require('./utils/instantiate.js')
+const mergeInstances = require('./utils/merge-instances.js')
+const { json } = require('./utils/body-parser.js')
 
 /**
  * Grial server
@@ -32,7 +32,7 @@ const { json } = require('./utils/body-parser.js');
  */
 class Grial {
   constructor(env) {
-    this.env = env;
+    this.env = env
   }
 
   /**
@@ -41,40 +41,43 @@ class Grial {
    * @return {Object}     The schema, connectors and models
    */
   async prepare() {
-    const { BASE_PATH = '.' } = this.env;
+    const { BASE_PATH = '.' } = this.env
 
     // Grial config
-    this.config = await getConfig(BASE_PATH);
-    if ('graphqlConfig' in this.config)
-      console.log('Custom `graphqlConfig` found in grial.config.js.');
-    if ('graphiqlConfig' in this.config)
-      console.log('Custom `graphiqlConfig` found in grial.config.js.');
-    if ('subscriptionConfig' in this.config)
-      console.log('Custom `subscriptionConfig` found in grial.config.js.');
+    this.config = await getConfig(BASE_PATH)
+    if ('graphqlConfig' in this.config) {
+      console.log('Custom `graphqlConfig` found in grial.config.js.')
+    }
+    if ('graphiqlConfig' in this.config) {
+      console.log('Custom `graphiqlConfig` found in grial.config.js.')
+    }
+    if ('subscriptionConfig' in this.config) {
+      console.log('Custom `subscriptionConfig` found in grial.config.js.')
+    }
 
     // create schema
-    const resolvers = await getResolvers(BASE_PATH);
-    const typeDefs = await getSchemas(BASE_PATH);
-    const schema = makeExecutableSchema({ typeDefs, resolvers });
-    this.schema = schema;
+    const resolvers = await getResolvers(BASE_PATH)
+    const typeDefs = await getSchemas(BASE_PATH)
+    const schema = makeExecutableSchema({ typeDefs, resolvers })
+    this.schema = schema
 
     // create connectors
-    const connectors = await getConnectors(BASE_PATH);
+    const connectors = await getConnectors(BASE_PATH)
     const instancedConnectors = (await Promise.all(
       Object.entries(connectors).map(instantiate(this.env))
-    )).reduce(mergeInstances, {});
-    this.connectors = instancedConnectors;
+    )).reduce(mergeInstances, {})
+    this.connectors = instancedConnectors
 
     // create models
-    const models = await getModels(BASE_PATH);
-    const modelParams = Object.assign({}, this.env, instancedConnectors);
+    const models = await getModels(BASE_PATH)
+    const modelParams = Object.assign({}, this.env, instancedConnectors)
     const instancedModels = (await Promise.all(
       Object.entries(models).map(instantiate(modelParams))
-    )).reduce(mergeInstances, {});
-    this.models = instancedModels;
+    )).reduce(mergeInstances, {})
+    this.models = instancedModels
 
     // get loaders
-    this.loaders = await getLoaders(BASE_PATH);
+    this.loaders = await getLoaders(BASE_PATH)
   }
 
   /**
@@ -83,9 +86,9 @@ class Grial {
    * @return {Object}         Loaders instances
    */
   getLoaders(request) {
-    const { models, connectors, env, loaders } = this;
-    const loaderParams = Object.assign({}, request, env, connectors, models);
-    return Object.entries(loaders).map(instantiate(loaderParams)).reduce(mergeInstances, {});
+    const { models, connectors, env, loaders } = this
+    const loaderParams = Object.assign({}, request, env, connectors, models)
+    return Object.entries(loaders).map(instantiate(loaderParams)).reduce(mergeInstances, {})
   }
 
   /**
@@ -93,25 +96,32 @@ class Grial {
    * @return {Object} The GraphQL options
    */
   getGraphQLOptions(request) {
-    const { schema, models, connectors, config, env } = this;
+    const { schema, models, connectors, config, env } = this
 
-    const loaders = this.getLoaders(request);
+    const loaders = this.getLoaders(request)
 
     const baseOptions = {
       schema,
       context: { request, connectors, models, loaders },
       debug: env.NODE_ENV !== 'production'
-    };
+    }
 
     if ('graphqlConfig' in config) {
       return Object.assign(
         {},
         baseOptions,
-        config.graphqlConfig({ schema, request, connectors, models, loaders, env })
-      );
+        config.graphqlConfig({
+          schema,
+          request,
+          connectors,
+          models,
+          loaders,
+          env
+        })
+      )
     }
 
-    return baseOptions;
+    return baseOptions
   }
 
   /**
@@ -119,23 +129,23 @@ class Grial {
    * @return {Object} GraphiQL options
    */
   getGraphiQLOptions({ request, query }) {
-    const { env, config } = this;
+    const { env, config } = this
 
     const {
       PUBLIC_HOST = env.HOST || 'localhost',
       PUBLIC_PORT = env.PORT || 3000,
       SUBSCRIPTION_PATH = 'subscriptions'
-    } = env;
+    } = env
 
     const baseOptions = {
       endpointURL: '/graphql',
       subscriptionsEndpoint: `ws://${PUBLIC_HOST}:${PUBLIC_PORT}/${SUBSCRIPTION_PATH}`
-    };
+    }
 
     if ('graphiqlConfig' in config) {
-      return Object.assign({}, baseOptions, config.graphiqlConfig({ query, request, env }));
+      return Object.assign({}, baseOptions, config.graphiqlConfig({ query, request, env }))
     }
-    return baseOptions;
+    return baseOptions
   }
 
   /**
@@ -143,16 +153,16 @@ class Grial {
    * @return {Object} Options
    */
   getSubscriptionOptions() {
-    const { env, config, schema } = this;
+    const { env, config, schema } = this
 
     if ('subscriptionConfig' in config) {
       return Object.assign({}, { schema }, config.subscriptionConfig({ env, schema }), {
         execute,
         subscribe
-      });
+      })
     }
 
-    return { schema, execute, subscribe };
+    return { schema, execute, subscribe }
   }
 
   /**
@@ -167,65 +177,60 @@ class Grial {
      * @param  {Function} next     Call the next middleware
      * @return {Function}          Request handler
      */
-    return async (request, response, next = null) => {
-      const { schema, models, connectors, env, config } = this;
-      const { NODE_ENV } = env;
+    return async function handler(request, response, next = null) {
+      const { env } = this
 
-      const url = parse(request.url, true);
+      const url = parse(request.url, true)
 
-      const formatedURL = `${request.method.toUpperCase()} ${url.pathname}`;
+      const formatedURL = `${request.method.toUpperCase()} ${url.pathname}`
 
       // handle GraphQL queries
       if (formatedURL === graphql) {
-        const loaders = this.getLoaders(request);
-
         try {
           const data = await runHttpQuery([request, response], {
             method: request.method,
             options: this.getGraphQLOptions(request),
             query: request.method === 'POST' ? request.body || (await json(request)) : url.query
-          });
-          response.setHeader('Content-Type', 'application/json');
-          response.write(data);
+          })
+          response.setHeader('Content-Type', 'application/json')
+          response.write(data)
         } catch (error) {
           if (error.headers) {
             Object.entries(error.headers).forEach(([name, value]) => {
-              response.setHeader(name, value);
-            });
+              response.setHeader(name, value)
+            })
           }
-          response.statusCode = error.statusCode || 500;
-          response.write(error.message);
-        } finally {
-          return response.end();
+          response.statusCode = error.statusCode || 500
+          response.write(error.message)
         }
+        return response.end()
       }
 
       // render GraphiQL IDE
       if (formatedURL === graphiql) {
-        const { query } = url;
+        const { query } = url
         try {
           const graphiqlString = await GraphiQL.resolveGraphiQLString(
             query,
             this.getGraphiQLOptions({ query, request, env }),
             request
-          );
-          response.setHeader('Content-Type', 'text/html');
-          response.write(graphiqlString);
+          )
+          response.setHeader('Content-Type', 'text/html')
+          response.write(graphiqlString)
         } catch (error) {
-          response.statusCode = error.statusCode || 500;
-          response.write(error.message);
-        } finally {
-          return response.end();
+          response.statusCode = error.statusCode || 500
+          response.write(error.message)
         }
+        return response.end()
       }
 
       // if it's running inside Express/Connect try to call the next middleware
-      if (next) return next();
+      if (next) return next()
 
-      response.statusCode = 404;
-      response.statusMessage = 'Not Found';
-      return response.end();
-    };
+      response.statusCode = 404
+      response.statusMessage = 'Not Found'
+      return response.end()
+    }
   }
 
   /**
@@ -233,27 +238,23 @@ class Grial {
    * @return {[type]} [description]
    */
   run() {
-    const {
-      PORT = 3000,
-      HOST = 'localhost',
-      SUBSCRIPTION_PATH = 'subscriptions'
-    } = this.env;
+    const { PORT = 3000, HOST = 'localhost', SUBSCRIPTION_PATH = 'subscriptions' } = this.env
 
-    const server = createServer(this.getRequestHandler());
+    const server = createServer(this.getRequestHandler())
 
     return new Promise((resolve, reject) => {
       server.listen(PORT, HOST, error => {
-        if (error) return reject(error);
+        if (error) return reject(error)
         resolve({
           http: server,
           ws: new SubscriptionServer(this.getSubscriptionOptions(), {
             server,
             path: `/${SUBSCRIPTION_PATH}`
           })
-        });
-      });
-    });
+        })
+      })
+    })
   }
 }
 
-module.exports = Grial;
+module.exports = Grial

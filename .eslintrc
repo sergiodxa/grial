@@ -1,0 +1,14 @@
+---
+  parserOptions:
+    ecmaFeatures:
+      impliedStrict: true
+  env:
+    node: true
+    browser: false
+  extends:
+    - prettier
+    - standard
+  rules:
+    space-before-function-paren:
+      - error
+      - never

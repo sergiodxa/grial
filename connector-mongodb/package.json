@@ -1,6 +1,6 @@
 {
   "name": "@grial/connector-mongodb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Grial connector for MongoDB databases",
   "main": "index.js",
   "repository": {

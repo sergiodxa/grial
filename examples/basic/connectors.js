@@ -1,1 +1,1 @@
-exports.faker = require('@grial/connector-faker');
+exports.faker = require('@grial/connector-faker')

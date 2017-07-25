@@ -10,7 +10,7 @@ function instantiate(params) {
    * @param  {Function} factory The factory function
    * @return {Array}            The factory name and the created instance
    */
-  return async ([name, factory]) => [name, await factory(params)];
+  return async([name, factory]) => [name, await factory(params)]
 }
 
-module.exports = instantiate;
+module.exports = instantiate

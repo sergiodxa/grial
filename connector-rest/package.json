@@ -1,6 +1,6 @@
 {
   "name": "@grial/connector-rest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Grial connector for external Rest APIs",
   "main": "index.js",
   "repository": {

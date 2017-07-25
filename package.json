@@ -1,0 +1,36 @@
+{
+  "name": "grial",
+  "version": "1.0.0",
+  "description": "A Node.js framework to create GraphQL APIs",
+  "main": "server/index.js",
+  "repository": "sergiodxa/grial",
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
+  "license": "MIT",
+  "scripts": {
+    "precommit": "lint-staged",
+    "prettify": "prettier --no-semi --single-quote --trailing-comma none --print-width 100 --write **/*.js **/*.json",
+    "lint": "eslint **/**/*.js --quiet --color --cache",
+    "lint:fix": "eslint **/**/*.js --quiet --cache --fix"
+  },
+  "lint-staged": {
+    "*.json": [
+      "npm run prettify"
+    ],
+    "*.js": [
+      "npm run lint",
+      "npm run prettify",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "eslint": "^4.3.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3"
+  }
+}

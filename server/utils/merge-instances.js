@@ -6,7 +6,7 @@
  * @return {Object}           The new instances map
  */
 function mergeInstances(instances, [name, instance]) {
-  return Object.assign({}, instances, { [name]: instance });
+  return Object.assign({}, instances, { [name]: instance })
 }
 
-module.exports = mergeInstances;
+module.exports = mergeInstances
