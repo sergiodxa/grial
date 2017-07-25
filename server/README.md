@@ -9,6 +9,7 @@ The GraphQL server module of Grial
 - PUBLIC_PORT => the app public port (default to `PORT`), required inside Docker
 - PUBLIC_HOST => the app public host (default to `HOST`), required inside Docker
 - SUBSCRIPTION_PATH => the app subscriptions path (default `subscriptions`)
+- SSL_ENABLED => if the app is running with SSL (HTTPS and WSS)
 
 ## Usage
 Install it

@@ -137,12 +137,18 @@ class Grial {
     const {
       PUBLIC_HOST = env.HOST || 'localhost',
       PUBLIC_PORT = env.PORT || 3000,
-      SUBSCRIPTION_PATH = 'subscriptions'
+      SUBSCRIPTION_PATH = 'subscriptions',
+      SSL_ENABLED = false
     } = env
+
+    let PROTOCOL = 'ws'
+    if (SSL_ENABLED) {
+      PROTOCOL = 'wss'
+    }
 
     const baseOptions = {
       endpointURL: '/graphql',
-      subscriptionsEndpoint: `ws://${PUBLIC_HOST}:${PUBLIC_PORT}/${SUBSCRIPTION_PATH}`
+      subscriptionsEndpoint: `${PROTOCOL}://${PUBLIC_HOST}:${PUBLIC_PORT}/${SUBSCRIPTION_PATH}`
     }
 
     if ('graphiqlConfig' in config) {
