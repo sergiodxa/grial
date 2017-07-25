@@ -4,6 +4,9 @@
   "env": {
     "HOST": "localhost",
     "PORT": 3000,
+    "PUBLIC_HOST": "grial-example-mongo-redis.now.sh",
+    "PUBLIC_PORT": 443,
+    "SSL_ENABLED": true,
     "REDIS_HOST": "@grial_example_redis_host",
     "REDIS_PORT": "@grial_example_redis_port",
     "MONGO_URL": "@grial_example_mongo_url"

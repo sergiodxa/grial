@@ -4,6 +4,9 @@
   "public": true,
   "env": {
     "HOST": "localhost",
-    "PORT": 3000
+    "PORT": 3000,
+    "PUBLIC_HOST": "grial-example-basic.now.sh",
+    "PUBLIC_PORT": 443,
+    "SSL_ENABLED": true
   }
 }

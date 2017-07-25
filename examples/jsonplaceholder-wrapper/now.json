@@ -5,6 +5,9 @@
   "env": {
     "HOST": "localhost",
     "PORT": 3000,
+    "PUBLIC_HOST": "grial-example-rest-wrapper.now.sh",
+    "PUBLIC_PORT": 443,
+    "SSL_ENABLED": true,
     "REST_ENDPOINT": "https://jsonplaceholder.typicode.com"
   }
 }

@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@grial/cli@^1.3.0":
+"@grial/cli@latest":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@grial/cli/-/cli-1.3.0.tgz#9d86035f2191637d5770ad58c989c7249224a20d"
   dependencies:
@@ -10,15 +10,15 @@
     commander "^2.11.0"
     dotenv "^4.0.0"
 
-"@grial/connector-rest@^1.0.1":
+"@grial/connector-rest@latest":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@grial/connector-rest/-/connector-rest-1.0.1.tgz#6a5a176b994d271b4aa52e2d036160f098e1af27"
   dependencies:
     node-fetch "^1.7.1"
 
-"@grial/server@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@grial/server/-/server-1.4.0.tgz#db1fd38b00b92407c42a9547a549f3aa9c736d2f"
+"@grial/server@latest":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@grial/server/-/server-1.4.1.tgz#f54577691ee8da3a2555fe19dee795555c4cdc30"
   dependencies:
     file-exists "^4.0.0"
     graphql "^0.10.3"
@@ -503,7 +503,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-dataloader@^1.3.0:
+dataloader@latest:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-1.3.0.tgz#6fec5be4b30a712e4afd30b86b4334566b97673b"
 
@@ -2126,13 +2126,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-wordwrap@0.0.2:
+wordwrap@0.0.2, wordwrap@~0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.2.tgz#b79669bb42ecb409f83d583cad52ca17eaa1643f"
-
-wordwrap@~0.0.2:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
 
 wordwrap@~1.0.0:
   version "1.0.0"

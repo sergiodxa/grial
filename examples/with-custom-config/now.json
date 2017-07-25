@@ -6,6 +6,7 @@
     "HOST": "localhost",
     "PORT": 3000,
     "PUBLIC_HOST": "grial-example-with-custom-config.now.sh",
-    "PUBLIC_PORT": 443
+    "PUBLIC_PORT": 443,
+    "SSL_ENABLED": true
   }
 }

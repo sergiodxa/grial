@@ -17,8 +17,8 @@
     faker "^4.1.0"
 
 "@grial/server@latest":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@grial/server/-/server-1.4.0.tgz#db1fd38b00b92407c42a9547a549f3aa9c736d2f"
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@grial/server/-/server-1.4.1.tgz#f54577691ee8da3a2555fe19dee795555c4cdc30"
   dependencies:
     file-exists "^4.0.0"
     graphql "^0.10.3"
