@@ -4,7 +4,7 @@
   "description": "A Node.js framework to create GraphQL APIs",
   "main": "server/index.js",
   "repository": "sergiodxa/grial",
-  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.now.sh/)",
   "license": "MIT",
   "scripts": {
     "precommit": "lint-staged",

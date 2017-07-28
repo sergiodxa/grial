@@ -8,7 +8,7 @@
     "url": "git+https://github.com/sergiodxa/grial.git"
   },
   "keywords": ["grial", "grial-connector", "redis"],
-  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.xalambri.xyz/)",
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.now.sh/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sergiodxa/grial/issues"
