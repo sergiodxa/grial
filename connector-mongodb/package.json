@@ -16,5 +16,8 @@
   "homepage": "https://github.com/sergiodxa/grial#readme",
   "dependencies": {
     "mongodb": "^2.2.29"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }

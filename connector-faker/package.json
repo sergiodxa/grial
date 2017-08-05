@@ -16,5 +16,8 @@
   "homepage": "https://github.com/sergiodxa/grial#readme",
   "dependencies": {
     "faker": "^4.1.0"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }

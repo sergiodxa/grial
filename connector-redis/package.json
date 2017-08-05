@@ -16,5 +16,8 @@
   "homepage": "https://github.com/sergiodxa/grial#readme",
   "dependencies": {
     "redis": "^2.7.1"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }

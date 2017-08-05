@@ -13,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/sergiodxa/grial/issues"
   },
-  "homepage": "https://github.com/sergiodxa/grial#readme"
+  "homepage": "https://github.com/sergiodxa/grial#readme",
+  "files": [
+    "index.js"
+  ]
 }

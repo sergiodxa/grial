@@ -29,5 +29,10 @@
   },
   "peerDependencies": {
     "@grial/server": "*"
-  }
+  },
+  "files": [
+    "utils/check-peer-deps.js",
+    "grial",
+    "grial-start"
+  ]
 }

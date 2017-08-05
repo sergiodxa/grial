@@ -16,5 +16,8 @@
   "homepage": "https://github.com/sergiodxa/grial#readme",
   "dependencies": {
     "node-fetch": "^1.7.1"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }
