@@ -8,6 +8,8 @@ const { runHttpQuery } = require('graphql-server-core')
 const GraphiQL = require('graphql-server-module-graphiql')
 const { SubscriptionServer } = require('subscriptions-transport-ws')
 const { execute, subscribe } = require('graphql')
+const { json } = require('micro')
+const { instantiate, mergeInstances, getConfig } = require('@grial/utils')
 
 // API layer
 const getResolvers = require('./api/resolvers.js')
@@ -17,14 +19,6 @@ const getSchemas = require('./api/schema.js')
 const getConnectors = require('./app/connectors.js')
 const getLoaders = require('./app/loaders.js')
 const getModels = require('./app/models.js')
-
-// HTTP Server layer
-const getConfig = require('./server/config.js')
-
-// Utils
-const instantiate = require('./utils/instantiate.js')
-const mergeInstances = require('./utils/merge-instances.js')
-const { json } = require('./utils/body-parser.js')
 
 /**
  * Grial server
