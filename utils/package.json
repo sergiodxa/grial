@@ -1,0 +1,24 @@
+{
+  "name": "@grial/utils",
+  "version": "1.0.0",
+  "description": "Grial utility functions",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiodxa/grial.git"
+  },
+  "keywords": ["grial", "grial-utils"],
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.now.sh/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sergiodxa/grial/issues"
+  },
+  "homepage": "https://github.com/sergiodxa/grial#readme",
+  "files": [
+    "getConfig.js",
+    "index.js",
+    "instantiate.js",
+    "mergeInstances.js"
+  ]
+}
