@@ -10,7 +10,7 @@ const readdir = promisify(fs.readdir)
 const stat = promisify(fs.stat)
 
 // Returns only graphql files from a folder
-const getSchemaFiles = async function (folder) {
+const getSchemaFiles = async function(folder) {
   const files = (await readdir(resolve(folder))) || []
 
   return files
@@ -18,11 +18,12 @@ const getSchemaFiles = async function (folder) {
     .filter(async file => (await stat(file)).isFile())
     .filter(file => file.endsWith('.gql') || file.endsWith('.graphql'))
 }
+
 // Returns concatenated schemas content
 const getSchemasContent = async function(folder) {
   const files = await getSchemaFiles(resolve(folder))
-  const schemas = await Promise.all(files.map(async (file) => (await readFile(file, 'utf8'))))
-  return (schemas.length > 0) && schemas.reduce((previous, current) => previous + os.EOL + current)
+  const schemas = await Promise.all(files.map(async file => readFile(file, 'utf8')))
+  return schemas.length > 0 && schemas.reduce((previous, current) => previous + os.EOL + current)
 }
 
 module.exports = async function getSchema(BASE_PATH) {
@@ -36,7 +37,7 @@ module.exports = async function getSchema(BASE_PATH) {
     if (schema && schema.length > 0) {
       return schema
     }
-    
+
     throw new ReferenceError('The file `./schema.gql` or `./schema.graphql` is required.')
   } catch (error) {
     if (error.code === 'ENOENT') {
