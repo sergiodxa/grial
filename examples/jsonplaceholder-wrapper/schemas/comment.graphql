@@ -1,0 +1,7 @@
+type Comment {
+  post: Post!
+  id: Int!
+  name: String!
+  email: String!
+  body: String!
+}

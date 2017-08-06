@@ -1,0 +1,6 @@
+type Album {
+  user: User!
+  id: Int!
+  title: String!
+  photos: [Photo]!
+}
