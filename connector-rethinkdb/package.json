@@ -1,0 +1,22 @@
+{
+  "name": "@grial/connector-rethinkdb",
+  "version": "1.0.0",
+  "description": "The Grial connector for RethinkDB databases",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiodxa/grial.git"
+  },
+  "keywords": ["grial", "grial-connector", "rethinkdb"],
+  "author": "Sergio Daniel Xalambrí <sergiodxa@gmail.com> (https://sergio.now.sh/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sergiodxa/grial/issues"
+  },
+  "homepage": "https://github.com/sergiodxa/grial#readme",
+  "dependencies": {
+    "@grial/utils": "^1.0.0",
+    "rethinkdb": "^2.2.29"
+  },
+  "files": ["index.js"]
+}
