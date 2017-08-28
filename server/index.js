@@ -16,9 +16,9 @@ const getResolvers = require('./api/resolvers.js')
 const getSchemas = require('./api/schema.js')
 
 // Business logic layer
-const getConnectors = require('./app/connectors')
-const getLoaders = require('./app/loaders')
-const getModels = require('./app/models')
+const getConnectors = require('./app/connectors.js')
+const getLoaders = require('./app/loaders.js')
+const getModels = require('./app/models.js')
 
 /**
  * Grial server
